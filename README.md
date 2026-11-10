@@ -1,59 +1,66 @@
-# TunioFrontend
+# Tunio — Web (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.7.
+Aplicación web de **Tunio**, un sistema de solicitud musical colaborativa para bares y discotecas. Incluye el login del personal, la pantalla del bar con el reproductor, el panel de administración y el tablero analítico.
 
-## Development server
+La web consume la API del backend de Tunio (NestJS), que debe estar en ejecución.
 
-To start a local development server, run:
+## Requisitos
 
-```bash
-ng serve
-```
+- [Node.js](https://nodejs.org/) 18.19 o superior (se recomienda la versión LTS) y npm
+- Backend de Tunio corriendo en `http://localhost:3000`
+- Google Chrome (para ejecutar las pruebas)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Instalación
 
 ```bash
-ng generate component component-name
+git clone https://github.com/Julianaramirez939/Tunio-frontend.git
+cd Tunio-frontend
+npm install
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Ejecución
 
-```bash
-ng generate --help
+1. Levanta primero el backend (desde su repositorio):
+
+   ```bash
+   docker compose up -d
+   npm run seed
+   npm run start:dev
+   ```
+
+2. Inicia la web:
+
+   ```bash
+   npm start
+   ```
+
+3. Abre `http://localhost:4200`.
+
+> **Puerto:** la web debe correr en el **4200**, el único origen que permite el CORS del backend. Si lo cambias, actualiza también `CORS_ORIGINS` en el `.env` del backend.
+
+## Configuración
+
+La URL del backend está en `src/environments/environment.ts`:
+
+```ts
+export const environment = {
+  apiUrl: 'http://localhost:3000',
+  timezone: 'America/Bogota',
+};
 ```
 
-## Building
+## Usuarios de prueba
 
-To build the project run:
+Los crea el `seed` del backend (por ejemplo `admin@taberna-el-faro.test` y `dj@taberna-el-faro.test`). La contraseña es la que esté en `SEED_STAFF_PASSWORD` en el `.env` del backend.
 
-```bash
-ng build
-```
+## Comandos
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+| Comando | Descripción |
+|---|---|
+| `npm start` | Servidor de desarrollo en `http://localhost:4200` |
+| `npm run build` | Compilación de producción en `dist/` |
+| `npm test` | Pruebas unitarias (Karma + Jasmine) |
 
-## Running unit tests
+## Documentación
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+El detalle del proyecto y de la API está en la carpeta `docs/` (ver `docs/07-API-ENDPOINTS.md`).
